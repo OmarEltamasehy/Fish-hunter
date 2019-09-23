@@ -143,12 +143,12 @@ function start() {
     function repeat() {
 
         //level 1
-        if (count >=0 && count <= 50){
+        if (count >=0 && count <= 5){
             levelNum.innerHTML = "1";
         }
 
         //level 2
-        if(count >=51 && count <= 100){
+        if(count >=6 && count <= 8){
             levelNum.innerHTML = "2";
 
             //To display it once;
@@ -161,9 +161,9 @@ function start() {
         }
 
         //level 3
-        if(count >=101 && count <= 150){
+        if(count >=9 && count <= 12){
             levelNum.innerHTML = "3";
-            if(appear == 2){
+            if(appear == 1){
                 pearl.style.display = "block";
                 fish_6.style.display = "block";
                 shark2Fun();
