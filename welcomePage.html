@@ -4,54 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fish Race</title>
+    <title>Fish Hunter</title>
     <link href="style.css" rel="stylesheet" /> </head>
     <style>
+        #body{
+            background-image: url("imges/water-20.gif");
+            background-size: cover;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
         #headDiv{
             position: absolute;
-            top:12%;
-            left:44%;
-            
-            
+            top:130px ;
+            width: 400px;
+            margin-left: calc(50% - 200px);
 
+        }
+
+        #head{
+            font-size: 55px;
+            text-align: center;
+            font-family:cursive;
+            text-shadow: 5px 5px 5px rgb(0, 82, 136);
+            
 
         }
         .content{
             position: absolute;
-            left:35%;
-            top:30%;
+            top: 240px;
+            width: 500px;
+            margin-left: calc(50% - 330px);
+
         }
         .myButton{
-            background-color:#292929;
-            border:1px solid #292929;
-            border-radius:3px;color:#ffffff;
+            background-color:#61c5f3ab;
+            border:5px solid #176ea0;
+            border-radius:10px;color:#005485;
             display:inline-block;
-            font-family:sans-serif;
-            font-size:16px;
+            font-family:cursive;
+            font-size:35px;
             line-height:44px;
             text-align:center;
             text-decoration:none;
-            width:450px;
+            width:550px;
+            text-shadow: 3px 3px 3px rgb(0, 112, 177);
+
             -webkit-text-size-adjust:none;
         }
     </style>
 </head>
-<body> 
-    <div id ="headDiv">
-        <h1 id="head" >Fish Racing</h1>
-    </div>
+ <body id="body"> 
+        <div id ="headDiv">
+        <span id="head">Fish Hunter</span>  
+        </div>
     <div class="content">
-            <a href="index.html" class="myButton" >Start</a>
+            <a href="index.html" class="myButton" id="startBtn" onclick="newIndex()">Start</a>
             <br><br>
-            <a href="#" class="myButton">Levels</a>
+            <a href="how_to_play.html" class="myButton">How To play</a>
             <br><br>
-            <a href="#" class="myButton">How To play</a>
+            <a href="Characters.html" class="myButton">Character</a>
             <br><br>
-            <a href="#" class="myButton">Character</a>
-            <br><br>
-            <a href="#" class="myButton">Exit</a>
-
+            <a href="#" class="myButton" type="button" value="Close this window" onclick="self.close()"> Exit</a>
+        
     </div>
 
+    <script src="script2.js"></script>
+    
 </body>
 </html>

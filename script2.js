@@ -1,42 +1,56 @@
-/* Arshad Muhammed */
-function start() {
+/* iTi Fish Hunter */
 
+function start() {
     
     var anim_id;
-    var container = document.getElementById('container'); console.log("container :" + container);
-    var car = document.getElementById('car'); console.log("car :" + car);
+    var container = document.getElementById('container'); 
+    var fish = document.getElementById('fish'); 
+    var fishImg = document.getElementById('myFish');
     
-    var car_1 = document.getElementById('car_1'); console.log("car 1 :" + car_1);
-    var car_2 = document.getElementById('car_2'); console.log("car 1 :" + car_2);
-    var car_3 = document.getElementById('car_3'); console.log("car 1 :" + car_3);
+    // for selecting character 
+    fishImg.src = localStorage.getItem("selected_character");
     
-    // var line_1 = document.getElementById('line_1'); console.log("car 1 :" + line_1);
-    // var line_2 = document.getElementById('line_2'); console.log("car 1 :" + line_2);
-    // var line_3 = document.getElementById('line_3'); console.log("car 1 :" + line_3);
-    
+    var levelNum = document.getElementById("levelNum"); 
+
+    var fish_1 = document.getElementById('fish_1'); 
+    var fish_2 = document.getElementById('fish_2'); 
+    var fish_3 = document.getElementById('fish_3');
+    var fish_4 = document.getElementById("fish_4"); 
+    var fish_5 = document.getElementById("fish_5");
+    var fish_6 = document.getElementById("fish_6");
+
+    var shark1 = document.getElementById("shark1");
+    var shark3 = document.getElementById("shark3");
+    var diamond = document.getElementById('diamond'); 
+    var pearl = document.getElementById('pearl'); 
+     
     var restart_div =  document.getElementById('restart_div');
     var restart_btn =  document.getElementById('restart'); 
+    var win_div =  document.getElementById('win_div');
+    var win_btn =  document.getElementById('win_restart'); 
 
     var score = document.getElementById('score');
     var high_score = localStorage.getItem('high_score');
-    //var high_score = 42;
+    
     document.getElementById('high_score').innerText = high_score;
     
     //saving some initial setup
 
-    var container_left = parseInt(container.offsetLeft);console.log("container_left :" + container_left);
-    var container_width = parseInt(container.offsetWidth);console.log("container_width :" + container_width);
-    var container_height = parseInt(container.offsetHeight); console.log("container_height :" + container_height);
-    var car_width = parseInt(car.offsetWidth); console.log("car_width :" + car_width);
-    var car_height = parseInt(car.offsetHeight); console.log("car_height :" + car_height);
+    var container_left = parseInt(container.offsetLeft);
+    var container_width = parseInt(container.offsetWidth);
+    var container_height = parseInt(container.offsetHeight); 
+    var fish_width = parseInt(fish.offsetWidth); 
+    var fish_height = parseInt(fish.offsetHeight); 
 
     //some other declarations
     var game_over = false;
 
     var score_counter = 1;
-
+    var count  = 0;   // for eating fish counter  
+    var StagingCounter = 0;
+    
     var speed = 2;
-    var line_speed = 5;
+    var appear = 0; //to control appearin elements for once
 
     var move_right = false;
     var move_left = false;
@@ -45,7 +59,7 @@ function start() {
 
     /* ------------------------------GAME CODE STARTS HERE------------------------------------------- */
 
-    /* Move the cars */
+    /* Move the fishes */
     document.addEventListener('keydown' , function(e) {
         if (game_over === false) {
             var key = e.keyCode;
@@ -59,7 +73,6 @@ function start() {
                 move_down = requestAnimationFrame(down);
             }
         }
-        
     });
     
     document.addEventListener('keyup' , function(e) {
@@ -82,152 +95,245 @@ function start() {
     });
 
 
-
-    
     function left() {
-        if (game_over === false && parseInt(car.offsetLeft) > 0) {
-            car.style.left = parseInt(car.offsetLeft) - 5 + "px"
+        if (game_over === false && parseInt(fish.offsetLeft) > 0) {
+            fish.style.left = parseInt(fish.offsetLeft) - 5 + "px"
             move_left = requestAnimationFrame(left);
         }
     }
 
     function right() {
 
-        if (game_over === false && parseInt( car.offsetLeft ) < container_width - car_width) {
-            car.style.left = parseInt(car.offsetLeft) + 5 +"px";
+        if (game_over === false && parseInt( fish.offsetLeft ) < container_width - fish_width) {
+            fish.style.left = parseInt(fish.offsetLeft) + 5 +"px";
             move_right = requestAnimationFrame(right);
            
         }
     }
 
     function up() {
-        if (game_over === false && parseInt(car.offsetTop) > 0 ) {
-            //car.css('top', parseInt(car.css('top')) - 3);
-            car.style.top = parseInt(car.offsetTop) - 3 + "px";
+        if (game_over === false && parseInt(fish.offsetTop) > 0 ) {
+            fish.style.top = parseInt(fish.offsetTop) - 3 + "px";
             move_up = requestAnimationFrame(up);
         }
     }
 
     function down() {
-        if (game_over === false && parseInt(car.offsetTop) < container_height - car_height) {
-            //car.css('top', parseInt(car.css('top')) + 3);
-            car.style.top = parseInt(car.offsetTop) + 3 + "px";
+        if (game_over === false && parseInt(fish.offsetTop) < container_height - fish_height) {
+            fish.style.top = parseInt(fish.offsetTop) + 3 + "px";
             move_down = requestAnimationFrame(down);
         }
     }
 
-    /* Move the cars and lines */
+    /* Start the smooth moving */
     anim_id = requestAnimationFrame(repeat);
+  
+    /* Hide some elements to be used later */
+    fish_4.style.display = "none";
+    
+    //to be shown in the 2nd level
+    fish_5.style.display = "none";  
+    shark1.style.display = "none";  
 
-
-
-    var count  = 0;   // for eating fish counter  
-    Huntedfish = document.getElementById('Huntedfish');
-
-    var car_4 = document.getElementById("car_4");
-    car_4.style.display = "none"
-
+    //to be shown in the last level
+    fish_6.style.display = "none";  
+    shark3.style.display = "none";  
+    pearl.style.display = "none"; 
+    
     function repeat() {
-        // if (collision(car, car_1) || collision(car, car_2) || collision(car, car_3)) {
-        //     //stop_the_game()
-        //     return;
-        // }
+
+        //level 1
+        if (count >=0 && count <= 50){
+            levelNum.innerHTML = "1";
+        }
+
+        //level 2
+        if(count >=51 && count <= 100){
+            levelNum.innerHTML = "2";
+
+            //To display it once;
+            if(appear == 0){
+                fish_5.style.display = "block";
+                shark1Fun(); 
+                appear++;
+            }
+           
+        }
+
+        //level 3
+        if(count >=101 && count <= 150){
+            levelNum.innerHTML = "3";
+            if(appear == 2){
+                pearl.style.display = "block";
+                fish_6.style.display = "block";
+                shark2Fun();
+                appear++;
+            }
+            
+        }
+
+        //The cup
+        if(count>150){
+            levelNum.innerHTML = "Win";
+            the_end();
+            
+        }
 
 
-
-        if (collision(car, car_4)){
+        //enemy collisions
+        if (collision(fish, fish_4) || collision(fish, shark1) || collision(fish, shark3) ){
             stop_the_game()
             return;
         }
 
-        if (collision(car, car_1)){
-            car_1.style.display = "none";
-           
-            car.style.width = parseInt(car.style.width) +10 +"px";
-             
-            
+        
+
+        if (collision(fish, fish_1)){
+            fish_1.style.display = "none";  
+            fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
+            fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
             setTimeout(() => {
-                car_1.style.display = "block";
+                fish_1.style.display = "block";
             }, 2000);
             count++;
-            Huntedfish.innerText = count;
-
-
+            score.innerText = count;   
         }
 
-        if (collision(car, car_2)){
-            car_2.style.display = "none";
-            
-
-            setTimeout(() => {
-                car_2.style.display = "block";
-            }, 2000);
-            count++;
-            Huntedfish.innerText = count;
-
-        }
-
-        if (collision(car, car_3)){
-            car_3.style.display = "none";
+        //Friendly Collisions
+        if (collision(fish, fish_2)){
+            fish_2.style.display = "none";
+            fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
+            fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
             
             setTimeout(() => {
-                car_3.style.display = "block";
+                fish_2.style.display = "block";
             }, 2000);
             count++;
-            Huntedfish.innerText = count;
+            score.innerText = count; 
         }
 
+
+        if (collision(fish, fish_3)){
+            fish_3.style.display = "none";
+            fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
+            fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
+
+            setTimeout(() => {
+                fish_3.style.display = "block";
+            }, 2500);
+            count++;
+            score.innerText = count;
+        }
+
+        if (collision(fish, fish_5)){
+            fish_5.style.display = "none";
+            fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
+            fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
+            setTimeout(() => {
+                fish_5.style.display = "block";
+            }, 3000);
+            count++;
+            score.innerText = count;
+        }
+
+        if (collision(fish, fish_6)){ 
+            fish_6.style.display = "none";
+            fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
+            fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
+            setTimeout(() => {
+                fish_6.style.display = "block";
+            }, 6000);
+            count +=2;
+            score.innerText = count;
+        }
+
+
+        if (collision(fish, diamond)){
+            diamond.style.display = "none";
+            fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
+            fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
+            
+            setTimeout(() => {
+                diamond.style.display = "block";
+            }, 8000);
+            count +=3;
+            score.innerText = count;
+        }
+
+        if (collision(fish, pearl)){
+            pearl.style.display = "none";
+            fishImg.style.width = parseInt(fishImg.offsetWidth) + 3 +"px";
+            fishImg.style.height = parseInt(fishImg.offsetHeight) + 3 +"px";
+            
+            setTimeout(() => {
+                pearl.style.display = "block";
+            }, 15000);
+            count +=5;
+            score.innerText = count;
+        }
+
+
+        //For Controlling the Speed
         score_counter++;
-
-        if (score_counter % 20 == 0) {
-           // score.text(parseInt(score.text() + 1);
-           score.innerText = parseInt(score.innerText) +1 ;
-        }
-        if (score_counter % 500 == 0) {
-            speed++;
-            line_speed++;
+        if (score_counter % 1900 == 0 ) {
+            speed++;     
         }
 
-        car_down(car_1);
-        car_down(car_2);
-        car_down(car_3);
-        car_down(car_4);
+        //Friends
+        fish_down(fish_1);
+        fish_down(fish_2);
+        fish_down(fish_3);
+        fish_down(diamond);
+        fish_down(fish_5);
+        fish_down(pearl);
+        fish_down(fish_6);
 
-        // line_down(line_1);
-        // line_down(line_2);
-        // line_down(line_3);
 
+        // Enemy
+        fish_down(shark1);
+        fish_down(fish_4);
+        fish_down(shark3);
 
+        //this is for the first shark executed automatically
         setInterval(() => {
-            car_4.style.display = "block";
-        }, 5000);
+            fish_4.style.display = "block";
+        }, 4000);
 
+        function shark1Fun()
+        {
+            setInterval(() => {
+                shark1.style.display = "block";
+            }, 7000);
+
+        }
+            function shark2Fun()
+        {
+            setInterval(() => {
+                shark3.style.display = "block";
+            }, 10000);
+        }
+          
+        //To continuosly respond on pressing the key
         anim_id = requestAnimationFrame(repeat);
     }
 
 
 
-    function car_down(car) {
-        var car_current_top = parseInt(car.offsetTop);
-        if (car_current_top > container_height) {
-            car_current_top = -200;
-            var car_left = parseInt(Math.random() * (container_width - car_width));
-            //car.css('left', car_left);
-            car.style.left = car_left + "px";
+    function fish_down(fish) {
+        var fish_current_top = parseInt(fish.offsetTop);
+        if (fish_current_top > container_height) {
+            fish_current_top = -200;
+            var fish_left = parseInt(Math.random() * (container_width - fish_width));
+            fish.style.left = fish_left + "px";
         }
-        //car.css('top', car_current_top + speed);
-        car.style.top = car_current_top + speed +"px";
+        fish.style.top = fish_current_top + speed +"px";
     }
 
-    // function line_down(line) {
-    //     var line_current_top = parseInt(line.offsetTop);
-    //     if (line_current_top > container_height) {
-    //         line_current_top = -300;
-    //     }
-    //     line.style.top = line_current_top + line_speed + "px";
-    // }
-
     restart_btn.onclick = function() {
+        location.reload();
+    };
+
+    win_btn.onclick = function() {
         location.reload();
     };
 
@@ -240,29 +346,39 @@ function start() {
         cancelAnimationFrame(move_left);
         cancelAnimationFrame(move_up);
         cancelAnimationFrame(move_down);
-        
         restart_div.style.display = "block";
-        //alert("Game Over");
-        //
         restart_btn.focus();
         setHighScore();
     }
+
+    function the_end() {
+        game_over = true;
+        cancelAnimationFrame(anim_id);
+        cancelAnimationFrame(move_right);
+        cancelAnimationFrame(move_left);
+        cancelAnimationFrame(move_up);
+        cancelAnimationFrame(move_down);
+        win_div.style.display = "block";
+        win_btn.focus();
+        setHighScore();
+    }
+
+    
 
     function setHighScore() {
         if (high_score < parseInt(score.innerText)) {
             high_score = parseInt(score.innerText);
             localStorage.setItem('high_score', parseInt(score.innerText));
         }
-        //$('#high_score').text(high_score);
         document.getElementById('high_score').innerText = high_score;
     }
 
     /* ------------------------------GAME CODE ENDS HERE------------------------------------------- */
-    //Some Outer JavaScript Functions
+    
+    //Some Outer size JavaScript Functions
     function outerHeight(el) {
         var height = el.offsetHeight;
         var style = getComputedStyle(el);
-      
         height += parseInt(style.marginTop) + parseInt(style.marginBottom);
         return height;
     }
@@ -270,7 +386,6 @@ function start() {
     function outerWidth(el) {
         var width = el.offsetWidth;
         var style = getComputedStyle(el);
-      
         width += parseInt(style.marginLeft) + parseInt(style.marginRight);
         return width;
     }
@@ -293,9 +408,8 @@ function start() {
         return true;
     }
 
-
-
 }
 
-
 start();
+
+
