@@ -1,7 +1,7 @@
 /* iTi Fish Hunter */
 
 function start() {
-    
+
     var anim_id;
     var container = document.getElementById('container'); 
     var fish = document.getElementById('fish'); 
@@ -141,14 +141,14 @@ function start() {
     pearl.style.display = "none"; 
     
     function repeat() {
-
+     
         //level 1
-        if (count >=0 && count <= 5){
+        if (count >=0 && count <= 50){
             levelNum.innerHTML = "1";
         }
 
         //level 2
-        if(count >=6 && count <= 8){
+        if(count >=51 && count <= 100){
             levelNum.innerHTML = "2";
 
             //To display it once;
@@ -161,7 +161,7 @@ function start() {
         }
 
         //level 3
-        if(count >=9 && count <= 12){
+        if(count >=101 && count <= 150){
             levelNum.innerHTML = "3";
             if(appear == 1){
                 pearl.style.display = "block";
@@ -192,6 +192,7 @@ function start() {
             fish_1.style.display = "none";  
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
+            
             setTimeout(() => {
                 fish_1.style.display = "block";
             }, 2000);
@@ -231,7 +232,7 @@ function start() {
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
             setTimeout(() => {
                 fish_5.style.display = "block";
-            }, 3000);
+            }, 3500);
             count++;
             score.innerText = count;
         }
@@ -275,7 +276,7 @@ function start() {
 
         //For Controlling the Speed
         score_counter++;
-        if (score_counter % 1900 == 0 ) {
+        if (score_counter % 1600 == 0 ) {
             speed++;     
         }
 

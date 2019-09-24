@@ -93,11 +93,16 @@ body {
 }
 
 #fish_5{
-    top: -1600px;
+    top: -1700px;
     left: 50%;
     
 }
 
+#fish_6{
+    top: -1850px;
+    left: 50%;
+    
+}
 
 #restart_div, #win_div {
     position: absolute;
