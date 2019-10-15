@@ -21,87 +21,71 @@ body {
     border-radius:20px;
 }
 
-
-
 .fish{
     position: absolute;
     height:  90px ;
     width: 60px;
-    
-    
-    
-}
-#fish{
-    bottom: 8%;
-    left: 60%;
-    
 }
 
+#fish{
+    bottom: 8%;
+    left: 60%;  
+}
 
 #fish_1{
     top: -100px;
-    left: 60%;
-    
+    left: 60%;    
 }
+
 #fish_2{
     top: -200px;
-    left: 40%;
-    
+    left: 40%;    
 }
+
 #fish_3{
     top: -350px;
-    left: 50%;
-    
+    left: 50%;    
 }
 
 #diamond{
     top: -500px;
     left: 50%;
-    
 }
 
 #fish_4{
     top: -630px;
     left: 50%;
     position: absolute;
-   
 }
 
 #fish_5{
     top: -800px;
     left: 50%;
-    
 }
 
 #shark1{
     top: -950px;
     left: 50%;
-    
 }
 
 #pearl{
     top: -1200px;
     left: 50%;
-    
 }
 
 #shark3{
     top: -1450px;
     left: 50%;
-    
-    
 }
 
 #fish_5{
     top: -1700px;
     left: 50%;
-    
 }
 
 #fish_6{
     top: -1850px;
     left: 50%;
-    
 }
 
 #restart_div, #win_div {
@@ -114,8 +98,6 @@ body {
     font-size: 40px;
     text-align: center;
     display: none;
-
-
 }
 
 #restart {
@@ -145,9 +127,7 @@ body {
     border:5px solid #0c0c0c;
     border-radius:10px;color:#005485;
     font-family:cursive;
-    text-decoration:none;
-
-    
+    text-decoration:none;    
 }
 
 #level{
@@ -160,8 +140,6 @@ body {
     box-shadow: 4px 4px 0px 1px #001b74;
     border:5px solid #0c0c0c;
     border-radius:10px;color:#005485;
-
-    
 }
 
 p{
@@ -169,12 +147,9 @@ p{
     font-family:cursive;
     color: #ff0000;
     text-align: center;
-
-
-
 }
-.back {
-    
+
+.back {    
     position: absolute;
     margin-left: 6%;
     top: 640px;
@@ -185,9 +160,6 @@ p{
     border-radius:10px;color:#005485;
     font-family:cursive;
     text-decoration:none;
-    
-
-
 }
 
 

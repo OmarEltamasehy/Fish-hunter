@@ -1,6 +1,11 @@
 /* iTi Fish Hunter */
 
 function start() {
+    //Graping Audio files
+    var audio = new Audio('Eating.mp3');      // yasser
+    var audio2 = new Audio('underwater.mp3');  // yasser
+    var audio3 = new Audio('SoundGameOver.mp3'); //yasser
+    var audio4 = new Audio('cup.mp3'); //yasser
 
     var anim_id;
     var container = document.getElementById('container'); 
@@ -9,9 +14,13 @@ function start() {
     
     // for selecting character 
     fishImg.src = localStorage.getItem("selected_character");
-    
+    //Setting scores and high score
+    var score = document.getElementById('score');
+    var high_score = localStorage.getItem('high_score');
+    document.getElementById('high_score').innerText = high_score;
     var levelNum = document.getElementById("levelNum"); 
 
+    //Selecting Fish Divs
     var fish_1 = document.getElementById('fish_1'); 
     var fish_2 = document.getElementById('fish_2'); 
     var fish_3 = document.getElementById('fish_3');
@@ -29,14 +38,7 @@ function start() {
     var win_div =  document.getElementById('win_div');
     var win_btn =  document.getElementById('win_restart'); 
 
-    var score = document.getElementById('score');
-    var high_score = localStorage.getItem('high_score');
-    
-    document.getElementById('high_score').innerText = high_score;
-    
     //saving some initial setup
-
-    var container_left = parseInt(container.offsetLeft);
     var container_width = parseInt(container.offsetWidth);
     var container_height = parseInt(container.offsetHeight); 
     var fish_width = parseInt(fish.offsetWidth); 
@@ -44,13 +46,11 @@ function start() {
 
     //some other declarations
     var game_over = false;
-
     var score_counter = 1;
     var count  = 0;   // for eating fish counter  
-    var StagingCounter = 0;
     
-    var speed = 2;
-    var appear = 0; //to control appearin elements for once
+    var speed = 2;   //Speed of the comming fishes
+    var appear = 0; //to control appearing elements for the first time
 
     var move_right = false;
     var move_left = false;
@@ -94,20 +94,17 @@ function start() {
         }
     });
 
-
     function left() {
         if (game_over === false && parseInt(fish.offsetLeft) > 0) {
-            fish.style.left = parseInt(fish.offsetLeft) - 5 + "px"
+            fish.style.left = parseInt(fish.offsetLeft) - 8 + "px"
             move_left = requestAnimationFrame(left);
         }
     }
 
     function right() {
-
         if (game_over === false && parseInt( fish.offsetLeft ) < container_width - fish_width) {
-            fish.style.left = parseInt(fish.offsetLeft) + 5 +"px";
-            move_right = requestAnimationFrame(right);
-           
+            fish.style.left = parseInt(fish.offsetLeft) + 8 +"px";
+            move_right = requestAnimationFrame(right);  
         }
     }
 
@@ -127,39 +124,31 @@ function start() {
 
     /* Start the smooth moving */
     anim_id = requestAnimationFrame(repeat);
-  
     /* Hide some elements to be used later */
     fish_4.style.display = "none";
-    
     //to be shown in the 2nd level
     fish_5.style.display = "none";  
     shark1.style.display = "none";  
-
     //to be shown in the last level
     fish_6.style.display = "none";  
     shark3.style.display = "none";  
     pearl.style.display = "none"; 
     
     function repeat() {
-     
         //level 1
         if (count >=0 && count <= 50){
             levelNum.innerHTML = "1";
         }
-
         //level 2
         if(count >=51 && count <= 100){
             levelNum.innerHTML = "2";
-
             //To display it once;
             if(appear == 0){
                 fish_5.style.display = "block";
                 shark1Fun(); 
                 appear++;
-            }
-           
+            } 
         }
-
         //level 3
         if(count >=101 && count <= 150){
             levelNum.innerHTML = "3";
@@ -169,30 +158,27 @@ function start() {
                 shark2Fun();
                 appear++;
             }
-            
         }
-
         //The cup
         if(count>150){
             levelNum.innerHTML = "Win";
-            the_end();
-            
+            the_end();  
         }
-
 
         //enemy collisions
         if (collision(fish, fish_4) || collision(fish, shark1) || collision(fish, shark3) ){
             stop_the_game()
             return;
         }
+        //Play the background music
+        audio2.play();  // yasser
 
-        
-
+        //Friendly Collisions
         if (collision(fish, fish_1)){
             fish_1.style.display = "none";  
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
-            
+            setTimeout (audio.play() , 50) // yasser
             setTimeout(() => {
                 fish_1.style.display = "block";
             }, 2000);
@@ -200,12 +186,11 @@ function start() {
             score.innerText = count;   
         }
 
-        //Friendly Collisions
         if (collision(fish, fish_2)){
             fish_2.style.display = "none";
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
-            
+            setTimeout (audio.play() , 50) ;// yasser
             setTimeout(() => {
                 fish_2.style.display = "block";
             }, 2000);
@@ -213,12 +198,11 @@ function start() {
             score.innerText = count; 
         }
 
-
         if (collision(fish, fish_3)){
             fish_3.style.display = "none";
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
-
+            setTimeout (audio.play() , 50) ;// yasser
             setTimeout(() => {
                 fish_3.style.display = "block";
             }, 2500);
@@ -230,6 +214,7 @@ function start() {
             fish_5.style.display = "none";
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
+            setTimeout (audio.play() , 50) ;// yasser
             setTimeout(() => {
                 fish_5.style.display = "block";
             }, 3500);
@@ -241,6 +226,7 @@ function start() {
             fish_6.style.display = "none";
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
+            setTimeout (audio.play() , 50) ;// yasser
             setTimeout(() => {
                 fish_6.style.display = "block";
             }, 6000);
@@ -248,12 +234,11 @@ function start() {
             score.innerText = count;
         }
 
-
         if (collision(fish, diamond)){
             diamond.style.display = "none";
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 1 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 1 +"px";
-            
+            setTimeout (audio.play() , 50) ;// yasser
             setTimeout(() => {
                 diamond.style.display = "block";
             }, 8000);
@@ -265,7 +250,7 @@ function start() {
             pearl.style.display = "none";
             fishImg.style.width = parseInt(fishImg.offsetWidth) + 3 +"px";
             fishImg.style.height = parseInt(fishImg.offsetHeight) + 3 +"px";
-            
+            setTimeout (audio.play() , 50) ;// yasser
             setTimeout(() => {
                 pearl.style.display = "block";
             }, 15000);
@@ -288,8 +273,6 @@ function start() {
         fish_down(fish_5);
         fish_down(pearl);
         fish_down(fish_6);
-
-
         // Enemy
         fish_down(shark1);
         fish_down(fish_4);
@@ -299,27 +282,26 @@ function start() {
         setInterval(() => {
             fish_4.style.display = "block";
         }, 4000);
-
+        //To start showing shark1
         function shark1Fun()
         {
             setInterval(() => {
                 shark1.style.display = "block";
             }, 7000);
-
         }
-            function shark2Fun()
+        //Start showing shark2
+        function shark2Fun()
         {
             setInterval(() => {
                 shark3.style.display = "block";
             }, 10000);
         }
           
-        //To continuosly respond on pressing the key
+        //To continuosly repeat sliding the fishes
         anim_id = requestAnimationFrame(repeat);
     }
 
-
-
+    //To randomly slide the fishes down
     function fish_down(fish) {
         var fish_current_top = parseInt(fish.offsetTop);
         if (fish_current_top > container_height) {
@@ -338,8 +320,6 @@ function start() {
         location.reload();
     };
 
-    
-
     function stop_the_game() {
         game_over = true;
         cancelAnimationFrame(anim_id);
@@ -347,6 +327,8 @@ function start() {
         cancelAnimationFrame(move_left);
         cancelAnimationFrame(move_up);
         cancelAnimationFrame(move_down);
+        audio2.pause(); //yasser
+        audio3.play(); //yasser
         restart_div.style.display = "block";
         restart_btn.focus();
         setHighScore();
@@ -359,12 +341,12 @@ function start() {
         cancelAnimationFrame(move_left);
         cancelAnimationFrame(move_up);
         cancelAnimationFrame(move_down);
+        audio2.pause(); //yasser
         win_div.style.display = "block";
         win_btn.focus();
+        setTimeout (audio4.play() , 4000)//yasser
         setHighScore();
     }
-
-    
 
     function setHighScore() {
         if (high_score < parseInt(score.innerText)) {
@@ -375,47 +357,27 @@ function start() {
     }
 
     /* ------------------------------GAME CODE ENDS HERE------------------------------------------- */
-    
-    //Some Outer size JavaScript Functions
-    function outerHeight(el) {
-        var height = el.offsetHeight;
-        var style = getComputedStyle(el);
-        
-        
-        height += parseInt(style.marginTop) + parseInt(style.marginBottom);
-        return height;
-    }
-
-    function outerWidth(el) {
-        var width = el.offsetWidth;
-        var style = getComputedStyle(el);
-        width += parseInt(style.marginLeft) + parseInt(style.marginRight);
-        return width;
-    }
 
     function collision(div1, div2) {
         var x1 = div1.offsetLeft;
-        var y1 = div1.offsetTop;
-        var h1 = outerHeight(div1);
-        var w1 = outerWidth(div1);
+        var y1 = div1.offsetTop; 
+        var h1 = div1.offsetHeight;
+        var w1 = div2.offsetWidth/2;
         var b1 = y1 + h1;
         var r1 = x1 + w1;
         var x2 = div2.offsetLeft;
         var y2 = div2.offsetTop;
-        var h2 = outerHeight(div2);
-        var w2 = outerWidth(div2);
+        var h2 = div2.offsetHeight;
+        var w2 = div2.offsetWidth/2;
         var b2 = y2 + h2;
         var r2 = x2 + w2;
 
-        console.log("b1: "+b1);
-        console.log("y2: "+y2);
-        
         if (b1 < y2 || y1 > b2 || r1 < x2 || x1 > r2) return false;
         return true;
     }
 
 }
-
+//To start the whole function 
 start();
 
 
